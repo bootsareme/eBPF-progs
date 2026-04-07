@@ -10,7 +10,7 @@ A collection of eBPF programs that occasionally do what you want. To get started
 
 ## System Requirements
 
-- Linux (Debian, Fedora, Arch, Ubuntu, Kali, ...*any modern kernel would suffice, userspace should not matter except in rare cases*...)
+- Linux (Debian, Fedora, Arch, Ubuntu, Kali, ...*any modern kernel would suffice, distro should not matter except in rare cases*...)
 - Python 3 (popular distros should have by default)
 
 ## Suggested Use Case
