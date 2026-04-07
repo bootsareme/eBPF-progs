@@ -14,7 +14,7 @@ A collection of eBPF programs that occasionally do what you want. To get started
 - Python 3 (popular distros should have by default)
 
 ## Suggested Use Case
-These standalone eBPF programs are quick utilities and not ready for production. Do not use it on any system that you care. The recommended approach is to create a Linux virtual machine with the correct kernel version and test all of it there. 
+These standalone eBPF programs are quick utilities and not ready for production. Do not use it on any system that you care. The recommended approach is to create a Linux virtual machine with the correct kernel version and test all of it there. For many harnesses, you may need multiple terminal windows: one to keep the harness alive, the other to interact with the system while the program is running.
 
 ## Contributing
 Please submit issues on what type of eBPF programs you would like to see get added. Feel free to add a written program yourself. You should put your `progname.bpf.c` in `kern/` (all code here runs in kernel space) and `progname_harness.py` in `user/`. This will keep the format consistent for the entire repository.
