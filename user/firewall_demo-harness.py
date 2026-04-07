@@ -1,21 +1,20 @@
-# Usage: sudo python3 firewall_demo-harness.py [interface you want to block]
+# Usage: sudo python3 firewall_demo-harness.py [interface you want to filter]
 # Run this in the background or a concurrent shell to test that it actually works
 
 from bcc import BPF
-import socket
 import sys
 
 # load function from corresponding BPF file
 bpf = BPF(src_file="../kern/firewall_demo.bpf.c")
-func = bpf.load_func("fw_block_ip", BPF.XDP)
+fw_block_ipaddr = bpf.load_func("fw_block_ipaddr", BPF.XDP)
 
-idx = socket.if_nametoindex(sys.argv[1])
-bpf.attach_xdp(idx, fn)
+# attach to network interface the function that will be monitoring it
+bpf.attach_xdp(sys.argv[1], fw_block_ipaddr)
 print(f"XDP firewall attached to {sys.argv[1]}")
 
 try:
     while True:
-        pass
+        bpf.trace_print() 
 except KeyboardInterrupt:
-    bpf.remove_xdp(idx, 0)
-    print(f"XDP detached from {sys.argv[1]}")
+    bpf.remove_xdp(sys.argv[1], 0)
+    print(f"\nXDP firewall detached from {sys.argv[1]}")

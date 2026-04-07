@@ -1,5 +1,5 @@
 /*
-    This program blocks your machine from contacting BLOCKED_IP using XDP.
+    This program blocks BLOCKED_IP from contacting your machine using XDP.
     It is attached to your network interface of choosing and does filtering there.
 */
 
@@ -14,7 +14,7 @@ static const struct {
     uint8_t octet4;
 } BLOCKED_IP = {1, 0, 0, 1}; // 1.0.0.1 as an example
 
-int fw_block_ip(struct xdp_md *ctx)
+int fw_block_ipaddr(struct xdp_md *ctx)
 {
     void *frame_end = (void *)(long)ctx->data_end; // pointer to end of ethernet frame
     void *frame = (void *)(long)ctx->data; // pointer to start of frame
@@ -29,14 +29,17 @@ int fw_block_ip(struct xdp_md *ctx)
         if ((void *)ip_header + sizeof(*ip_header) > frame_end) // IP header too large!
             return XDP_PASS;
 
+        // store as network order (big endian)
         uint32_t blocked_ip = (BLOCKED_IP.octet1 << 24) |
                                 (BLOCKED_IP.octet2 << 16) |
                                 (BLOCKED_IP.octet3 << 8) |
                                 BLOCKED_IP.octet4;
 
-        // if destination is the blocked IP, then drop the packet
-        if (ip_header->daddr == __constant_htonl(blocked_ip))
+        // if coming from the blocked IP, then drop the packet
+        if (ip_header->saddr == blocked_ip) {
+            bpf_trace_printk("Detected traffic from IPv4 address = 0x%x, dropping packet...", blocked_ip);
             return XDP_DROP;
+        }
     }
 
     return XDP_PASS;
