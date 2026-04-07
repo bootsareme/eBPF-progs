@@ -3,8 +3,8 @@ A collection of eBPF programs that occasionally do what you want. To get started
 
 1. Read and understand the [purpose](https://ebpf.io/what-is-ebpf/) of eBPF.
 2. Make sure your environment meets the system requirements listed below.
-3. https://github.com/iovisor/bcc/blob/master/INSTALL.md
-4. `sudo python3 user/specific_prog_harness.py`
+3. `sudo apt install bpfcc-tools python3-bpfcc linux-headers-$(uname -r)`
+4. Run any program with: `sudo python3 user/specific_prog-harness.py`
 5. Should there be any additional instructions, they will be spelled out in the harness script comments.
 6. Explanations of the eBPF code itself will live in the source (not harness) comments.
 
