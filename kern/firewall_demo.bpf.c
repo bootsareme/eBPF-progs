@@ -3,7 +3,6 @@
     It is attached to your network interface of choosing and does filtering there.
 */
 
-#include <linux/bpf.h>
 #include <linux/if_ether.h>
 #include <linux/ip.h>
 
