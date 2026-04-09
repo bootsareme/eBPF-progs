@@ -1,3 +1,5 @@
+# Usage: sudo python3 generic-harness.py <path/to/eBPF/prog.c>
+
 from bcc import BPF
 import sys
 
