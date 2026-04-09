@@ -7,7 +7,6 @@ print("[*] Blocking all access to /etc/shadow (including root)...")
 print("[*] Watching /sys/kernel/debug/tracing/trace_pipe...")
 
 try:
-    while True:
-        bpf.trace_print()
+    bpf.trace_print()
 except KeyboardInterrupt:
     print("\n[+] Detached")

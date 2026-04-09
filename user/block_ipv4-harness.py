@@ -13,8 +13,7 @@ bpf.attach_xdp(sys.argv[1], fw_block_ipaddr)
 print(f"XDP firewall attached to {sys.argv[1]}")
 
 try:
-    while True:
-        bpf.trace_print() 
+    bpf.trace_print() 
 except KeyboardInterrupt:
     bpf.remove_xdp(sys.argv[1], 0)
     print(f"\nXDP firewall detached from {sys.argv[1]}")
